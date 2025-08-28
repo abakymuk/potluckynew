@@ -1,99 +1,203 @@
-# Potlucky Monorepo (Edge/Serverless-first)
+# Potlucky - Edge/Serverless-first Scaffold
 
-## Structure
+Современный монорепозиторий для создания масштабируемых веб-приложений с использованием Next.js 15, Supabase, Drizzle ORM и Sentry.
 
-- apps/
-  - web/ – Next.js 15 приложение с Edge runtime
-- packages/
-  - ui/ – базовые UI-хелперы (shadcn/ui)
-  - config/ – фичефлаги и env-хелперы
-  - contracts/ – схемы и контракты API (позже: zod + openapi)
-  - types/ – общие типы
-- infra/ – скрипты и (позже) CI/infra
+## 🚀 Технологии
 
-## Environment
+- **Frontend**: Next.js 15 (App Router, Edge Runtime)
+- **Database**: PostgreSQL (via Supabase)
+- **ORM**: Drizzle ORM
+- **Authentication**: Supabase Auth (Edge SSR)
+- **Observability**: Sentry (Error tracking, Performance monitoring, Session replay)
+- **Styling**: Tailwind CSS v4.1.12
+- **UI Components**: shadcn/ui
+- **Monorepo**: pnpm workspaces + Turbo
+- **Type Safety**: TypeScript 5.6.0
+- **Testing**: Vitest
 
-### Required public env (build will fail if missing)
-
-```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-```
-
-### Database env (for migrations/seeds)
+## 📁 Структура проекта
 
 ```
-SUPABASE_DB_URL=postgresql://postgres:password@host:5432/postgres?sslmode=require
-SUPABASE_SERVICE_ROLE=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+potluckynew/
+├── apps/
+│   └── web/                 # Next.js 15 приложение
+│       ├── app/            # App Router
+│       ├── components/     # UI компоненты
+│       ├── lib/           # Утилиты и конфигурация
+│       └── tests/         # Тесты
+├── packages/
+│   ├── config/            # Конфигурация и feature flags
+│   ├── ui/               # Общие UI компоненты
+│   ├── contracts/        # Типы и контракты
+│   └── types/           # Общие типы
+├── infra/
+│   ├── db/              # База данных (Drizzle + миграции)
+│   ├── ci/              # CI/CD конфигурация
+│   └── scripts/         # Скрипты
+└── scripts/             # Утилитарные скрипты
 ```
 
-### Feature flags (optional, default=false)
+## 🛠 Установка и запуск
 
-```
-ONLINE_ORDERING_V1=false
-ORDER_QUEUE_V1=false
-AI_ADVISOR_V1=false
-```
+### Предварительные требования
 
-## Database Commands
+- Node.js 18+
+- pnpm 9+
+- PostgreSQL (или Supabase)
 
-- `pnpm drizzle:generate` - Generate migrations from schema
-- `pnpm drizzle:push` - Apply migrations to database
-- `pnpm db:seed` - Seed database with test data
-- `pnpm db:rls` - Apply RLS policies
-- `pnpm test:rls` - Run RLS e2e tests
-
-## RLS & Auth
-
-- RLS включён на organizations/profiles/memberships.
-- Функция `auth_profile_id()` (SECURITY DEFINER) — безопасно вычисляет профиль по JWT.
-- Триггер `on_auth_user_created` создаёт профиль при регистрации.
-- В рантайме используются только anon-ключи; все доступы контролируются RLS.
-- Для сидов/тестов необходим `SUPABASE_SERVICE_ROLE`.
-
-### Auth check (локально)
+### Установка
 
 ```bash
-# ENV
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-SUPABASE_DB_URL=...
-SUPABASE_SERVICE_ROLE=...
+# Клонирование репозитория
+git clone https://github.com/abakymuk/potluckynew.git
+cd potluckynew
 
-# сиды/rls (если ещё не выполняли)
-pnpm drizzle:generate && pnpm drizzle:push
-pnpm db:rls && pnpm db:seed
+# Установка зависимостей
+pnpm install
 
-# токен Alice
+# Настройка переменных окружения
+cp apps/web/env.example apps/web/.env.local
+```
+
+### Переменные окружения
+
+Создайте файл `apps/web/.env.local`:
+
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# Sentry (опционально)
+NEXT_PUBLIC_SENTRY_DSN=your_sentry_dsn
+SENTRY_AUTH_TOKEN=your_sentry_auth_token
+SENTRY_ORG=your_sentry_org
+SENTRY_PROJECT=your_sentry_project
+
+# Feature Flags
+NEXT_PUBLIC_FEATURE_NEW_UI=false
+NEXT_PUBLIC_FEATURE_BETA=true
+```
+
+### Запуск
+
+```bash
+# Разработка
+pnpm dev
+
+# Сборка
+pnpm build
+
+# Тесты
+pnpm test
+
+# Линтинг
+pnpm lint
+
+# Проверка типов
+pnpm typecheck
+```
+
+## 🗄 База данных
+
+### Настройка Supabase
+
+1. Создайте проект в [Supabase](https://supabase.com)
+2. Получите URL и ключи из настроек проекта
+3. Добавьте их в `.env.local`
+
+### Миграции
+
+```bash
+# Генерация миграций
+pnpm drizzle:generate
+
+# Применение миграций
+pnpm drizzle:push
+
+# Сид данных
+pnpm db:seed
+
+# Применение RLS политик
+pnpm db:rls
+```
+
+## 🔐 Аутентификация
+
+Проект использует Supabase Auth с Edge SSR:
+
+- Автоматическое создание профилей при регистрации
+- Row Level Security (RLS) для защиты данных
+- Middleware для передачи контекста пользователя
+- Защищенные API маршруты
+
+### Тестирование аутентификации
+
+```bash
+# Получение токена для Alice
 node scripts/get-token-alice.mjs
 
-# запрос к защищённому роуту
-curl -H "Authorization: Bearer <TOKEN>" http://localhost:3000/api/me | jq
+# Тестирование защищенного API
+curl -H "Authorization: Bearer YOUR_TOKEN" http://localhost:3000/api/me
 ```
 
-### Sentry check
+## 📊 Наблюдаемость (Sentry)
 
-1. Установи переменные: SENTRY_DSN (и в CI — AUTH_TOKEN/ORG/PROJECT).
-2. Локально: `pnpm --filter @potlucky/web dev`
-3. Открой: /api/ping?fail=1 → 500 и вернёт { error, eventId }.
-4. Проверь событие в Sentry (тег runtime=edge, request_id если включён).
+### Настройка Sentry
+
+1. Создайте проект в [Sentry](https://sentry.io)
+2. Получите DSN и auth token
+3. Добавьте их в `.env.local`
+
+### Тестирование
 
 ```bash
-# локально
+# Экспорт переменных Sentry
 source scripts/setup-sentry-env.sh
-pnpm --filter @potlucky/web build
-pnpm --filter @potlucky/web dev
-curl -s localhost:3000/api/ping
-curl -s "localhost:3000/api/ping?fail=1"
+
+# Запуск приложения
+pnpm dev
+
+# Тестирование ошибок
+curl "http://localhost:3000/api/ping?fail=1"
 ```
 
-## Commands
+### Тестовая страница
 
-- `pnpm -w build|dev|lint|typecheck|test`
-- `pnpm validate:packages`
+Откройте http://localhost:3000/sentry-example-page для тестирования различных типов ошибок.
 
-## Rules
+## 🧪 Тестирование
 
-- Contracts-first, mocks-first, feature flags.
-- Один пакет = один артефакт (cjs+esm+d.ts).
-- Никаких прямых обращений к process.env вне @potlucky/config.
+```bash
+# Все тесты
+pnpm test
+
+# E2E тесты RLS
+pnpm test:rls
+
+# Тесты конфигурации
+pnpm --filter @potlucky/config test
+```
+
+## 📋 Выполненные задачи
+
+- ✅ **T0.0**: Настройка pnpm/Turbo монорепозитория
+- ✅ **T0.1**: Next.js 15 приложение с Edge API
+- ✅ **T0.2**: Валидация переменных окружения и feature flags
+- ✅ **T0.3**: Интеграция Supabase + Drizzle ORM
+- ✅ **T0.4**: Row Level Security + автоматические профили
+- ✅ **T0.5**: Edge аутентификация с Supabase SSR
+- ✅ **T0.6**: Наблюдаемость с Sentry + OTEL трейсинг
+
+## 🔗 Полезные ссылки
+
+- [Next.js 15 Documentation](https://nextjs.org/docs)
+- [Supabase Documentation](https://supabase.com/docs)
+- [Drizzle ORM](https://orm.drizzle.team)
+- [Sentry Documentation](https://docs.sentry.io)
+- [shadcn/ui](https://ui.shadcn.com)
+
+## 📄 Лицензия
+
+MIT
