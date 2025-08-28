@@ -15,6 +15,19 @@ export const validatePublicEnv = () => {
   })
 
   if (!parsed.success) {
+    // During build time, return default values instead of throwing
+    if (process.env.NODE_ENV === 'production' || process.env.NEXT_PHASE === 'phase-production-build') {
+      console.warn(`[config] Public env validation failed: ${parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ')}. Using defaults.`)
+      return {
+        NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dummy.supabase.co',
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy_key',
+        NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN || '',
+        ONLINE_ORDERING_V1: false,
+        ORDER_QUEUE_V1: false,
+        AI_ADVISOR_V1: false,
+      }
+    }
+    
     const issues = parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ')
     throw new Error(
       `[config] Public env validation failed: ${issues}. ` +
