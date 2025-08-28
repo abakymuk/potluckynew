@@ -1,13 +1,13 @@
 import { Button } from '@/components/ui/button'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <h1 className="text-4xl font-bold mb-8">Potlucky Edge OK</h1>
-      </div>
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <Button>Test CI/CD</Button>
+    <main className="mx-auto max-w-2xl p-8">
+      <h1 className="text-2xl font-semibold">Potlucky Edge OK</h1>
+      <p className="mt-2 text-neutral-600">Next.js 15 + Tailwind + shadcn/ui scaffold</p>
+      <p className="mt-2 text-blue-600">🚀 CI/CD Test - Ready for deployment!</p>
+      <div className="mt-6">
+        <Button>Get Started</Button>
       </div>
     </main>
   )
