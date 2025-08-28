@@ -74,9 +74,9 @@ jobs:
     needs: [checks, migrate]
     runs-on: ubuntu-latest
     env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN || 'nJa66MeNInmmUtyfpSkS96pS' }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || 'team_HGb8HwCT7uFX5El8pg5826eU' }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID || 'prj_Nt3392RzHMdCyxPEJwD6n5AMIrnl' }}
       NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL || 'https://wnqzzplxfoutblsksvud.supabase.co' }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InducXp6cGx4Zm91dGJsc2tzdnVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNTI2OTUsImV4cCI6MjA3MTkyODY5NX0.xKBvnarYHs3qAV1ug5HVNBdfiERMOGv23gCZWYfvFtk' }}
       NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN || 'https://02713f753f9d4facd8fd7d7500f5874a@o4509919839387648.ingest.us.sentry.io/4509919845285888' }}
@@ -86,6 +86,12 @@ jobs:
       - uses: pnpm/action-setup@v4
         with: { version: 10.14.0 }
       - run: pnpm i --frozen-lockfile
+
+      - name: Check Vercel environment
+        run: |
+          echo "VERCEL_TOKEN: ${VERCEL_TOKEN:0:10}..."
+          echo "VERCEL_ORG_ID: $VERCEL_ORG_ID"
+          echo "VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID"
 
       - name: Pull Vercel env (preview)
         run: |
