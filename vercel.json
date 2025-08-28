@@ -5,7 +5,7 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "functions": {
     "apps/web/app/api/**/*.ts": {
-      "runtime": "edge"
+      "runtime": "@vercel/edge@1.0.0"
     }
   },
   "env": {
