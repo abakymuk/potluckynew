@@ -180,6 +180,34 @@ pnpm test:rls
 pnpm --filter @potlucky/config test
 ```
 
+## 🚀 CI/CD Preview
+
+### Workflow
+- **Файл**: `.github/workflows/ci-preview.yml`
+- **Триггер**: Pull Request (opened, synchronize, reopened)
+- **Поведение**:
+  1. **checks**: lint/type/test/build
+  2. **migrate**: drizzle generate + push (preview DB)
+  3. **deploy**: vercel pull/build/deploy → PR comment с URL
+
+### Secrets (GitHub Settings → Secrets and variables → Actions)
+
+**Обязательные:**
+- `VERCEL_TOKEN`: Токен Vercel
+- `VERCEL_ORG_ID`: ID организации Vercel
+- `VERCEL_PROJECT_ID`: ID проекта Vercel
+- `SUPABASE_DB_URL_PREVIEW`: URL preview базы данных
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Anon key для сборки
+
+**Переменные (Variables):**
+- `NEXT_PUBLIC_SUPABASE_URL`: URL Supabase
+
+**Опциональные (Sentry):**
+- `SENTRY_DSN`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT`
+
+### Настройка
+См. файл `GITHUB_SECRETS_SETUP.md` для подробных инструкций по настройке secrets.
+
 ## 📋 Выполненные задачи
 
 - ✅ **T0.0**: Настройка pnpm/Turbo монорепозитория
@@ -189,6 +217,7 @@ pnpm --filter @potlucky/config test
 - ✅ **T0.4**: Row Level Security + автоматические профили
 - ✅ **T0.5**: Edge аутентификация с Supabase SSR
 - ✅ **T0.6**: Наблюдаемость с Sentry + OTEL трейсинг
+- ✅ **T0.7**: CI/CD Preview с Vercel deploy и PR комментариями
 
 ## 🔗 Полезные ссылки
 
