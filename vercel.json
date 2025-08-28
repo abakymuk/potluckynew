@@ -3,11 +3,7 @@
   "outputDirectory": "apps/web/.next",
   "framework": "nextjs",
   "installCommand": "pnpm install --frozen-lockfile",
-  "functions": {
-    "apps/web/app/api/**/*.ts": {
-      "runtime": "edge"
-    }
-  },
+  "rootDirectory": "apps/web",
   "env": {
     "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key",

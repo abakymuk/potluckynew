@@ -15,7 +15,11 @@
       "@ui/*": ["packages/ui/src/*"],
       "@config/*": ["packages/config/src/*"],
       "@contracts/*": ["packages/contracts/src/*"],
-      "@types/*": ["packages/types/src/*"]
+      "@types/*": ["packages/types/src/*"],
+      "@potlucky/config": ["packages/config/src"],
+      "@potlucky/ui": ["packages/ui/src"],
+      "@potlucky/contracts": ["packages/contracts/src"],
+      "@potlucky/types": ["packages/types/src"]
     }
   }
 }

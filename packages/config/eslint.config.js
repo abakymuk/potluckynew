@@ -11,7 +11,6 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        jsx: true,
       },
       globals: {
         process: 'readonly',
@@ -31,18 +30,9 @@ export default [
     rules: {
       ...tseslint.configs.recommended.rules,
       'no-undef': 'off',
-      '@typescript-eslint/no-require-imports': 'off',
     },
   },
   {
-    ignores: [
-      'dist',
-      '.turbo',
-      'node_modules',
-      '.next',
-      'postcss.config.js',
-      'instrumentation.js',
-      'instrumentation-client.js',
-    ],
+    ignores: ['dist', '.turbo', 'node_modules'],
   },
 ]

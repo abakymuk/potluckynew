@@ -11,7 +11,7 @@ VERCEL_PROJECT_ID=prj_Nt3392RzHMdCyxPEJwD6n5AMIrnl
 
 ### Supabase Configuration
 ```
-SUPABASE_DB_URL_PREVIEW=https://cqmuozdqbqjbipinxcpk.supabase.co
+SUPABASE_DB_URL_PREVIEW=postgresql://postgres.cqmuozdqbqjbipinxcpk:Gariba1ddiф@aws-0-us-west-1.pooler.supabase.com:6543/postgres
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InducXp6cGx4Zm91dGJsc2tzdnVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNTI2OTUsImV4cCI6MjA3MTkyODY5NX0.xKBvnarYHs3qAV1ug5HVNBdfiERMOGv23gCZWYfvFtk
 ```
 
@@ -29,7 +29,6 @@ SENTRY_PROJECT=potluckynew
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://wnqzzplxfoutblsksvud.supabase.co
 ```
-
 ## Инструкция по добавлению
 
 1. Перейдите в GitHub репозиторий → Settings → Secrets and variables → Actions
