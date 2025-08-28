@@ -1,0 +1,9 @@
+node_modules
+dist
+.turbo
+.vscode
+.env*
+coverage
+
+# Sentry Config File
+.env.sentry-build-plugin

@@ -1,0 +1,19 @@
+name: db-migrations
+on:
+  pull_request:
+    paths:
+      - 'infra/db/**'
+      - '.github/workflows/db-migrations.yml'
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL_PREVIEW }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm drizzle:generate
+      - run: pnpm drizzle:push

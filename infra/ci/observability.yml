@@ -1,0 +1,23 @@
+name: observability
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-upload-sourcemaps:
+    runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN }} # если используешь public-переменную
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm --filter @potlucky/web build
+      # withSentryConfig сам загружает sourcemaps во время build,
+      # если SENTRY_AUTH_TOKEN/ORG/PROJECT заданы.
