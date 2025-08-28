@@ -11,7 +11,7 @@
 - `VERCEL_PROJECT_ID`: `prj_Nt3392RzHMdCyxPEJwD6n5AMIrnl`
 
 ### Supabase Configuration
-- `SUPABASE_DB_URL_PREVIEW`: URL подключения к preview базе данных Supabase
+- `SUPABASE_DB_URL_PREVIEW`: `https://cqmuozdqbqjbipinxcpk.supabase.co`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Anon key для Supabase (для сборки)
 
 ## Переменные окружения (Variables)
