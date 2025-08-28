@@ -29,12 +29,6 @@ SENTRY_PROJECT=potluckynew
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://wnqzzplxfoutblsksvud.supabase.co
 ```
-
-### Sentry DSN
-```
-NEXT_PUBLIC_SENTRY_DSN=https://02713f753f9d4facd8fd7d7500f5874a@o4509919839387648.ingest.us.sentry.io/4509919845285888
-```
-
 ## Инструкция по добавлению
 
 1. Перейдите в GitHub репозиторий → Settings → Secrets and variables → Actions
