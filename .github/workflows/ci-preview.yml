@@ -95,15 +95,18 @@ jobs:
 
       - name: Pull Vercel env (preview)
         run: |
+          cd apps/web
           npx vercel pull --yes --environment=preview --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID
 
       - name: Build with Vercel (prebuilt)
         run: |
+          cd apps/web
           npx vercel build --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID
 
       - name: Deploy preview
         id: deploy
         run: |
+          cd apps/web
           URL=$(npx vercel deploy --prebuilt --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID)
           echo "url=$URL" >> $GITHUB_OUTPUT
 
