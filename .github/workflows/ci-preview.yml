@@ -59,7 +59,7 @@ jobs:
     needs: checks
     runs-on: ubuntu-latest
     env:
-      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL_PREVIEW }}
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL_PREVIEW || 'postgresql://postgres.cqmuozdqbqjbipinxcpk:password@aws-0-us-west-1.pooler.supabase.com:6543/postgres' }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
