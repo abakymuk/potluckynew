@@ -4,7 +4,7 @@
   "framework": "nextjs",
   "installCommand": "pnpm install --frozen-lockfile",
   "functions": {
-    "apps/web/app/api/**/*.ts": {
+    "apps/web/app/api/**/route.ts": {
       "runtime": "@vercel/edge@1.0.0"
     }
   },
