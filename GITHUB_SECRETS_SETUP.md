@@ -11,7 +11,7 @@
 - `VERCEL_PROJECT_ID`: `prj_Nt3392RzHMdCyxPEJwD6n5AMIrnl`
 
 ### Supabase Configuration
-- `SUPABASE_DB_URL_PREVIEW`: `postgresql://postgres.cqmuozdqbqjbipinxcpk:password@aws-0-us-west-1.pooler.supabase.com:6543/postgres`
+- `SUPABASE_DB_URL_PREVIEW`: `postgresql://postgres.cqmuozdqbqjbipinxcpk:Gariba1ddi@aws-0-us-west-1.pooler.supabase.com:6543/postgres`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Anon key для Supabase (для сборки)
 
 ## Переменные окружения (Variables)
